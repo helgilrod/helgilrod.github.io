@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LUMÉA — Korean-inspired skincare, reimagined.">
+  <title>LUMÉA — Skin, reimagined.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --white: #fff;
+      --soft: #f8f8fa;
+      --line: #e6e6eb;
+      --silver: #c9c9d2;
+      --text: #25252b;
+      --muted: #777781;
+      --lavender: #dcd6f7;
+      --lavender-strong: #b9afe8;
+      --radius: 28px;
+      --ease: cubic-bezier(.22,.75,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--white);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1160px, calc(100% - 32px));
+      height: 62px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px 0 24px;
+      border: 1px solid rgba(230,230,235,.85);
+      border-radius: 22px;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: .4s var(--ease);
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 12px 45px rgba(50,45,70,.07);
+      background: rgba(255,255,255,.88);
+    }
+
+    .logo {
+      font-family: Manrope, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .22em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      margin-left: 70px;
+      color: #5e5e67;
+      font-size: 12px;
+      letter-spacing: .03em;
+    }
+
+    .nav-links a { transition: .25s; }
+    .nav-links a:hover { color: #17171c; }
+
+    .nav-actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 35px;
+      height: 35px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(255,255,255,.6);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform .25s var(--ease), background .25s;
+    }
+    .icon-btn:hover { transform: translateY(-2px); background: var(--lavender); }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 75% 38%, rgba(220,214,247,.48), transparent 29%),
+        radial-gradient(circle at 22% 78%, rgba(235,235,241,.55), transparent 26%),
+        linear-gradient(135deg, #fff 0%, #fbfbfc 54%, #f7f5fc 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 55vw;
+      height: 55vw;
+      max-width: 700px;
+      max-height: 700px;
+      border: 1px solid rgba(185,175,232,.22);
+      border-radius: 50%;
+      right: -18vw;
+      top: 13%;
+    }
+
+    .hero-inner {
+      width: min(1160px, calc(100% - 48px));
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      gap: 40px;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .eyebrow, .product-kicker {
+      color: #7d788e;
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 18px 0 20px;
+      font-family: Manrope, sans-serif;
+      font-weight: 300;
+      font-size: clamp(54px, 7vw, 92px);
+      line-height: .96;
+      letter-spacing: -.055em;
+    }
+
+    .hero-copy p {
+      max-width: 440px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .pill-btn {
+      margin-top: 26px;
+      border: 1px solid #d9d9df;
+      background: #fff;
+      padding: 13px 19px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      transition: .35s var(--ease);
+    }
+    .pill-btn span:last-child {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--text);
+      color: white;
+      transition: .35s var(--ease);
+    }
+    .pill-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--lavender-strong);
+      box-shadow: 0 15px 35px rgba(75,67,110,.1);
+    }
+    .pill-btn:hover span:last-child { transform: translateX(4px); }
+
+    .hero-product {
+      height: 520px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .orb {
+      position: absolute;
+      width: 390px;
+      height: 390px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(220,214,247,.5));
+      box-shadow: inset 0 0 80px rgba(255,255,255,.95), 0 35px 100px rgba(117,108,153,.13);
+    }
+
+    .bottle {
+      width: 165px;
+      height: 330px;
+      position: relative;
+      z-index: 2;
+      border-radius: 32px 32px 27px 27px;
+      background: linear-gradient(90deg, #eeeeF2, #fff 27%, #f5f5f7 72%, #d9d9e0);
+      box-shadow: 22px 35px 60px rgba(60,57,70,.16), inset 10px 0 18px rgba(255,255,255,.85);
+      transform: rotate(-3deg);
+    }
+
+    .bottle::before {
+      content: "";
+      position: absolute;
+      width: 86px;
+      height: 64px;
+      left: 40px;
+      top: -55px;
+      border-radius: 14px 14px 5px 5px;
+      background: linear-gradient(90deg, #c5c5cd, #f8f8fa 45%, #aaaab5);
+      box-shadow: 0 10px 18px rgba(60,57,70,.12);
+    }
+
+    .bottle::after {
+      content: "LUMÉA\\A CLOUD ESSENCE";
+      white-space: pre;
+      position: absolute;
+      left: 28px;
+      top: 132px;
+      width: 110px;
+      padding: 13px 0;
+      border-top: 1px solid #cfcfd6;
+      border-bottom: 1px solid #cfcfd6;
+      text-align: center;
+      font-size: 8px;
+      line-height: 2;
+      letter-spacing: .16em;
+      color: #777780;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #9999a2;
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .scroll-line { width: 1px; height: 42px; background: linear-gradient(var(--lavender-strong), transparent); }
+
+    .collection {
+      position: relative;
+    }
+
+    .product {
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .product:nth-child(even) { background: #fafafd; }
+    .product:nth-child(odd) { background: #fff; }
+
+    .product::before {
+      content: "";
+      position: absolute;
+      width: 65vw;
+      height: 65vw;
+      max-width: 900px;
+      max-height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(220,214,247,.34), transparent 66%);
+      right: -25vw;
+      top: 10%;
+      z-index: -1;
+    }
+
+    .product-content {
+      width: min(1160px, calc(100% - 48px));
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 30px;
+      align-items: center;
+      padding: 90px 0;
+    }
+
+    .product:nth-child(even) .product-content { grid-template-columns: 1.2fr .8fr; }
+    .product:nth-child(even) .product-info { order: 2; }
+
+    .product-info {
+      transform: translateY(40px);
+      opacity: 0;
+      transition: 1s var(--ease);
+    }
+
+    .product.active .product-info {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .product-number {
+      font-family: Manrope, sans-serif;
+      font-size: 12px;
+      color: #9b98a4;
+      margin-bottom: 18px;
+      letter-spacing: .1em;
+    }
+
+    h2 {
+      font-family: Manrope, sans-serif;
+      font-size: clamp(45px, 6vw, 76px);
+      line-height: .95;
+      letter-spacing: -.055em;
+      font-weight: 300;
+      margin: 12px 0 22px;
+    }
+
+    .product-description {
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .product-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 25px 0;
+    }
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 10px;
+      color: #72727b;
+    }
+
+    .price {
+      font-family: Manrope, sans-serif;
+      font-size: 18px;
+      margin-right: 15px;
+    }
+
+    .product-visual {
+      height: 570px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      transform: translateY(55px) scale(.94);
+      opacity: 0;
+      transition: 1.15s var(--ease);
+    }
+    .product.active .product-visual {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .visual-ring {
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      border: 1px solid rgba(185,175,232,.34);
+      border-radius: 50%;
+    }
+    .visual-ring::after {
+      content: "";
+      position: absolute;
+      inset: 38px;
+      border: 1px solid rgba(201,201,210,.4);
+      border-radius: 50%;
+    }
+
+    .cosmetic {
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(28px 32px 30px rgba(46,43,55,.16));
+      transition: transform 1.2s var(--ease);
+    }
+    .product.active .cosmetic { transform: translateY(-8px) rotate(var(--tilt)); }
+
+    /* Four simple CSS product renders */
+    .essence { width: 155px; height: 330px; border-radius: 28px; background: linear-gradient(90deg,#d8d8df,#fff 28%,#f5f5f7 72%,#c7c7d0); }
+    .essence::before { content:""; position:absolute; left:37px; top:-58px; width:81px; height:65px; border-radius:12px 12px 4px 4px; background:linear-gradient(90deg,#aaaab3,#f5f5f7,#b6b6bf); }
+    .essence::after { content:"LUMÉA\\A CLOUD ESSENCE"; white-space:pre; position:absolute; left:25px; top:135px; width:105px; padding:12px 0; text-align:center; font-size:8px; line-height:2; letter-spacing:.12em; border-block:1px solid #c7c7ce; color:#777780; }
+
+    .serum { width: 135px; height: 300px; border-radius: 18px 18px 25px 25px; background: linear-gradient(90deg,#d4d4dc,#fff 35%,#eeeeF3,#c8c8d0); }
+    .serum::before { content:""; position:absolute; left:31px; top:-76px; width:73px; height:83px; border-radius:12px 12px 5px 5px; background:linear-gradient(90deg,#a9a9b4,#fafafa,#aaaab4); }
+    .serum::after { content:"LUMÉA\\A LUMIÈRE"; white-space:pre; position:absolute; left:22px; top:126px; width:91px; padding:12px 0; text-align:center; font-size:8px; line-height:2.2; letter-spacing:.13em; border-block:1px solid #c8c8d0; color:#777780; }
+
+    .cream { width: 245px; height: 125px; border-radius: 30px 30px 42px 42px; background: linear-gradient(145deg,#fff,#dddde5); box-shadow: inset 10px 7px 18px rgba(255,255,255,.8); }
+    .cream::before { content:""; position:absolute; left:0; top:-54px; width:245px; height:65px; border-radius:50%; background:linear-gradient(145deg,#fafafa,#c9c9d2); box-shadow: inset 0 6px 10px rgba(255,255,255,.9); }
+    .cream::after { content:"LUMÉA  ·  VELVET CREAM"; position:absolute; left:34px; top:43px; font-size:8px; letter-spacing:.15em; color:#777780; }
+
+    .mist { width: 145px; height: 335px; border-radius: 22px 22px 35px 35px; background: linear-gradient(90deg,#d7d7df,#fff 28%,#f1f1f5 72%,#c4c4ce); }
+    .mist::before { content:""; position:absolute; left:27px; top:-70px; width:91px; height:77px; border-radius:18px 18px 5px 5px; background:linear-gradient(90deg,#aaaab5,#fafafa,#a6a6b1); }
+    .mist::after { content:"LUMÉA\\A DEWY MIST"; white-space:pre; position:absolute; left:24px; top:142px; width:97px; padding:12px 0; text-align:center; font-size:8px; line-height:2.2; letter-spacing:.14em; border-block:1px solid #c7c7ce; color:#777780; }
+
+    .float-label {
+      position: absolute;
+      padding: 9px 12px;
+      border: 1px solid rgba(220,214,247,.75);
+      border-radius: 999px;
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(10px);
+      color: #7b748f;
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      animation: float 4s ease-in-out infinite;
+    }
+    .label-a { top: 22%; left: 12%; }
+    .label-b { bottom: 22%; right: 9%; animation-delay: -1.4s; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    .progress {
+      position: fixed;
+      z-index: 25;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .progress::before {
+      content:"";
+      position:absolute;
+      width:1px;
+      height:150px;
+      background:#e4e2eb;
+      z-index:-1;
+    }
+
+    .progress button {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      color: #aaa8b2;
+      font-size: 9px;
+      padding: 0;
+      transition: .3s;
+    }
+
+    .progress button::after {
+      content:"";
+      display:block;
+      width: 5px;
+      height: 5px;
+      margin: 3px auto 0;
+      border-radius: 50%;
+      background: #c8c4d1;
+      transition: .3s var(--ease);
+    }
+
+    .progress button.active { color: var(--text); }
+    .progress button.active::after {
+      width: 9px;
+      height: 9px;
+      background: var(--lavender-strong);
+      box-shadow: 0 0 0 5px rgba(185,175,232,.15);
+    }
+
+    .ending {
+      min-height: 80vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg,#fff,#f7f6fb);
+    }
+
+    .ending h3 {
+      font-family: Manrope, sans-serif;
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300;
+      letter-spacing: -.06em;
+      margin: 15px 0;
+    }
+
+    .ending p { color: var(--muted); line-height: 1.7; }
+    .footer-links {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      color: #777780;
+      font-size: 11px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 1s var(--ease);
+    }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 800px) {
+      .nav { width: calc(100% - 20px); top: 10px; }
+      .nav-links { display: none; }
+      .hero-inner, .product-content,
+      .product:nth-child(even) .product-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-inner { padding-top: 100px; }
+      .hero-copy p, .product-description { margin-left: auto; margin-right: auto; }
+      .hero-product { height: 420px; }
+      .orb { width: 300px; height: 300px; }
+      .product-content { padding: 85px 0 40px; }
+      .product:nth-child(even) .product-info { order: initial; }
+      .product-visual { height: 410px; order: 2; }
+      .visual-ring { width: 320px; height: 320px; }
+      .progress {
+        top: auto;
+        bottom: 18px;
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: row;
+        background: rgba(255,255,255,.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--line);
+        padding: 5px 8px;
+        border-radius: 999px;
+      }
+      .progress::before { display: none; }
+      .progress button { width: 25px; }
+      h2 { font-size: 52px; }
+      .footer-links { flex-wrap: wrap; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <a class="logo" href="#top">LUMÉA</a>
+    <div class="nav-links">
+      <a href="#collection">Collection</a>
+      <a href="#product-1">Skincare</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Buscar">⌕</button>
+      <button class="icon-btn" aria-label="Carrito">◌</button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Korean-inspired skincare</div>
+          <h1>Skin,<br>reimagined.</h1>
+          <p>Thoughtful formulas, quiet design and advanced skincare for a new generation.</p>
+          <a class="pill-btn" href="#collection">
+            Explore collection
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="hero-product reveal">
+          <div class="orb"></div>
+          <div class="bottle"></div>
+          <div class="float-label label-a">Hydration / 01</div>
+          <div class="float-label label-b">Minimal formula</div>
+        </div>
+      </div>
+
+      <div class="scroll-cue">
+        <span>Scroll to explore</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <aside class="progress" aria-label="Product navigation">
+      <button class="active" data-target="product-1">01</button>
+      <button data-target="product-2">02</button>
+      <button data-target="product-3">03</button>
+      <button data-target="product-4">04</button>
+    </aside>
+
+    <section class="collection" id="collection">
+
+      <article class="product active" id="product-1" data-index="1">
+        <div class="product-content">
+          <div class="product-info">
+            <div class="product-number">01 / 04</div>
+            <div class="product-kicker">Hydrating Essence</div>
+            <h2>Cloud<br>Essence</h2>
+            <p class="product-description">Ultra-light hydration with a weightless finish. A soft first layer designed to leave skin fresh, calm and luminous.</p>
+            <div class="product-meta">
+              <span class="tag">Hyaluronic complex</span>
+              <span class="tag">50 ml</span>
+              <span class="tag">Vegan</span>
+            </div>
+            <span class="price">€38</span>
+            <button class="pill-btn">Discover <span>→</span></button>
+          </div>
+          <div class="product-visual">
+            <div class="visual-ring"></div>
+            <div class="cosmetic essence" style="--tilt:-3deg"></div>
+            <span class="float-label label-a">01 — hydration</span>
+            <span class="float-label label-b">cloud texture</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="product" id="product-2" data-index="2">
+        <div class="product-content">
+          <div class="product-info">
+            <div class="product-number">02 / 04</div>
+            <div class="product-kicker">Brightening Serum</div>
+            <h2>Lumière<br>Serum</h2>
+            <p class="product-description">Advanced radiance care for naturally luminous skin. A refined serum with a silky, almost invisible finish.</p>
+            <div class="product-meta">
+              <span class="tag">Niacinamide</span>
+              <span class="tag">30 ml</span>
+              <span class="tag">Daily care</span>
+            </div>
+            <span class="price">€46</span>
+            <button class="pill-btn">Discover <span>→</span></button>
+          </div>
+          <div class="product-visual">
+            <div class="visual-ring"></div>
+            <div class="cosmetic serum" style="--tilt:3deg"></div>
+            <span class="float-label label-a">02 — radiance</span>
+            <span class="float-label label-b">silky finish</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="product" id="product-3" data-index="3">
+        <div class="product-content">
+          <div class="product-info">
+            <div class="product-number">03 / 04</div>
+            <div class="product-kicker">Barrier Cream</div>
+            <h2>Velvet<br>Cream</h2>
+            <p class="product-description">A soft restorative layer for a stronger skin barrier. Comforting, balanced and designed for everyday use.</p>
+            <div class="product-meta">
+              <span class="tag">Ceramides</span>
+              <span class="tag">50 ml</span>
+              <span class="tag">Barrier care</span>
+            </div>
+            <span class="price">€42</span>
+            <button class="pill-btn">Discover <span>→</span></button>
+          </div>
+          <div class="product-visual">
+            <div class="visual-ring"></div>
+            <div class="cosmetic cream" style="--tilt:-2deg"></div>
+            <span class="float-label label-a">03 — barrier</span>
+            <span class="float-label label-b">velvet texture</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="product" id="product-4" data-index="4">
+        <div class="product-content">
+          <div class="product-info">
+            <div class="product-number">04 / 04</div>
+            <div class="product-kicker">Hydrating Face Mist</div>
+            <h2>Dewy<br>Mist</h2>
+            <p class="product-description">Instant hydration for a fresh, dewy finish. A weightless mist made to refresh skin throughout the day.</p>
+            <div class="product-meta">
+              <span class="tag">Mineral water</span>
+              <span class="tag">80 ml</span>
+              <span class="tag">On-the-go</span>
+            </div>
+            <span class="price">€29</span>
+            <button class="pill-btn">Discover <span>→</span></button>
+          </div>
+          <div class="product-visual">
+            <div class="visual-ring"></div>
+            <div class="cosmetic mist" style="--tilt:4deg"></div>
+            <span class="float-label label-a">04 — refresh</span>
+            <span class="float-label label-b">dewy finish</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="ending" id="about">
+      <div class="reveal">
+        <div class="eyebrow">LUMÉA / 2026</div>
+        <h3>Beauty,<br>simplified.</h3>
+        <p>Thoughtful formulas. Quiet design.<br>Modern skincare.</p>
+        <div class="footer-links">
+          <a href="#">Instagram</a>
+          <a href="#">Pinterest</a>
+          <a href="mailto:hello@lumea.example">Contact</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const nav = document.getElementById("nav");
+    const products = [...document.querySelectorAll(".product")];
+    const progressButtons = [...document.querySelectorAll(".progress button")];
+    const reveals = [...document.querySelectorAll(".reveal")];
+
+    // Navbar glass effect
+    const updateNav = () => nav.classList.toggle("scrolled", window.scrollY > 40);
+    window.addEventListener("scroll", updateNav, { passive: true });
+    updateNav();
+
+    // Product activation + scroll-driven vertical showcase
+    const productObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
+          const current = entry.target;
+          products.forEach(p => p.classList.toggle("active", p === current));
+          progressButtons.forEach(btn =>
+            btn.classList.toggle("active", btn.dataset.target === current.id)
+          );
+        }
+      });
+    }, { threshold: [0.45, 0.7] });
+
+    products.forEach(product => productObserver.observe(product));
+
+    // Navigation dots
+    progressButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        document.getElementById(button.dataset.target).scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
+    });
+
+    // Hero / ending reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+      });
+    }, { threshold: 0.18 });
+
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Tiny pointer movement on product renders
+    products.forEach(product => {
+      const visual = product.querySelector(".cosmetic");
+      product.addEventListener("pointermove", e => {
+        if (window.innerWidth < 800) return;
+        const rect = product.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - .5;
+        const y = (e.clientY - rect.top) / rect.height - .5;
+        visual.style.translate = `${x * 8}px ${y * 8}px`;
+      });
+      product.addEventListener("pointerleave", () => {
+        visual.style.translate = "";
+      });
+    });
+  </script>
+</body>
+</html>
